@@ -145,7 +145,7 @@ header img {
 .cartatitulo
 {
 
-  height: 15vh;
+  height: 20vh;
   color: white;
 }
  .cardpriceandbutton {
@@ -153,7 +153,7 @@ header img {
   justify-content: space-between;
   color: white;
 
-  height: 5.5vh;
+  height: 7.5vh;
   align-items: baseline;
 } 
 .section-1 {
@@ -271,7 +271,9 @@ width: 50vw;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 3rem;
+  align-items: center;
+
+padding: 2rem;
   color: #fff;
 }
 .tabla {
