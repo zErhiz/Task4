@@ -27,7 +27,7 @@ export  function tabla1Render(primeraTabla,maxAsistencia, minAsistencia, eventoM
   }
     
 
-  export function tabla3Render(terceraTabla,categoriasEventosFuturos) {
+   export function tabla3Render(terceraTabla,categoriasEventosFuturos) {
     let tabla3 = "";
     tabla3 += `
       <table class="tabla1">
@@ -48,11 +48,11 @@ export  function tabla1Render(primeraTabla,maxAsistencia, minAsistencia, eventoM
         <tbody>
     `;
   
-    for (const categoria in categoriasEventosFuturos) {
-      const categoriaStats = categoriasEventosFuturos[categoria];
-      const gananciasTotales = categoriaStats.gananciasTotal;
-  
-      const asistenciaPromedio = categoriaStats.asistenciaTotal / categoriaStats.cantidadEventos;
+    for (const categoria in categoriasEventosFuturos) {                              
+      const categoriaFuturos = categoriasEventosFuturos[categoria];                //recorremos cada propiedad de las malditas categorias
+      const gananciasTotales = categoriaFuturos.gananciasTotal;                      //almacenamos
+                                                                                                        // y calculamos
+      const asistenciaPromedio = categoriaFuturos.asistenciaTotal / categoriaFuturos.cantidadEventos;
   
       tabla3 += `
         <tr>
@@ -99,8 +99,8 @@ export  function tabla1Render(primeraTabla,maxAsistencia, minAsistencia, eventoM
     `;
     
     for (const categoria in categoriasEventosPasados) {
-      const categoriaStats = categoriasEventosPasados[categoria];
-      const asistenciaPromedio = categoriaStats.asistenciaTotal / categoriaStats.cantidadEventos;
+      const categoriaPasados = categoriasEventosPasados[categoria];
+      const asistenciaPromedio = categoriaPasados.asistenciaTotal / categoriaPasados.cantidadEventos;
   
       
       tabla2 += `
@@ -109,7 +109,7 @@ export  function tabla1Render(primeraTabla,maxAsistencia, minAsistencia, eventoM
             ${categoria}
           </td>
           <td class="tabletd1" >
-            $${categoriaStats.gananciasTotal}
+            $${categoriaPasados.gananciasTotal}
           </td>
           <td class="tabletd1">
             ${asistenciaPromedio.toFixed(2)}%
@@ -126,3 +126,4 @@ export  function tabla1Render(primeraTabla,maxAsistencia, minAsistencia, eventoM
     segundaTabla.innerHTML = tabla2;
   }
   
+ 
