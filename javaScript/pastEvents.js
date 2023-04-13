@@ -1,4 +1,4 @@
-import { crearMasArticle, generarCheckboxes,filtrarEventosPorBusqueda} from "./module/funcionesPast.js";
+import { crearMasArticle, generarCheckboxes, filtrarEventosPorBusqueda, filtrarPorCategorias, mostrarEventosPasados} from "./module/funcionesPast.js";
 
 const url = 'https://mindhub-xj03.onrender.com/api/amazing';
 fetch(url)
@@ -6,63 +6,22 @@ fetch(url)
   .then(datos => 
     {
       let eventoDatos = datos;
+      
   //section 1
- const carta1 = document.getElementById(`section-11`);
- 
- const eventosAmazing = eventoDatos.events;
- 
- let eventosPasados = [];
- 
- for (const evento of eventosAmazing) {
-   if (evento.date < eventoDatos.currentDate) {
-     eventosPasados.push(evento);
-     console.log(evento);
-   }
- }
- 
- let crearArticle = "";
- for (let i = 0; i < eventosPasados.length; i++) {
-   crearArticle += crearMasArticle(eventosPasados[i]);
- }
- 
- carta1.innerHTML = crearArticle;
+  const eventosPasados = [];
+  for (const evento of datos.events) {
+    if (evento.date < eventoDatos.currentDate) {
+      eventosPasados.push(evento);
+    }
+  }
+  mostrarEventosPasados(datos.events, "section-11", datos);
  //hacer funcionar barra de busqueda
  const barraDeBusquedaValor = document.getElementById("search-input");
  filtrarEventosPorBusqueda(eventosPasados)
 //crear checkbox
-generarCheckboxes(eventosAmazing)
+generarCheckboxes(datos.events)
 //hacer que funcionen los checkbox
-const checkboxes = document.querySelectorAll('input[type=checkbox][name=opciones]');
-
-
-checkboxes.forEach((checkbox) => {
-  checkbox.addEventListener('change', () => {
-    
-    const categoriasSeleccionadas = [];
-    checkboxes.forEach((checkbox) => {
-      if (checkbox.checked) {
-        categoriasSeleccionadas.push(checkbox.value);
-      }
-    });
-
- 
-    let eventosFiltradosCheckbox;
-    if (categoriasSeleccionadas.length === 0) {
-      eventosFiltradosCheckbox = eventoDatos.events;
-    } else {
-      eventosFiltradosCheckbox = eventoDatos.events.filter((evento) => {
-        return categoriasSeleccionadas.includes(evento.category);
-      });
-    }
-
-    
-    const carta1 = document.getElementById('section-11');
-    carta1.innerHTML = '';
-    for (let i = 0; i < eventosFiltradosCheckbox.length; i++) {
-      carta1.innerHTML += crearMasArticle(eventosFiltradosCheckbox[i]);
-    }
-  });
-});
+filtrarPorCategorias(datos.events, "section-11");
 //hacer que actuen cruzados
 const actualizarEventosFiltrados = () => {
   const busquedaValor = barraDeBusquedaValor.value.toLowerCase();
@@ -93,7 +52,8 @@ const actualizarEventosFiltrados = () => {
 
 barraDeBusquedaValor.addEventListener('input', actualizarEventosFiltrados);
 
-checkboxes.forEach((checkbox) => {
+const checkboxesArray = Array.from(checkboxes);
+checkboxesArray.forEach((checkbox) => {
   checkbox.addEventListener('change', actualizarEventosFiltrados);
 }); 
     })

@@ -56,3 +56,55 @@ export function generarCheckboxes(eventosAmazing) {
   checkboxContenedor.innerHTML = crearCheckboxes;
   return crearCheckboxes;
 }
+
+//funcionar checkboxes 
+export function filtrarPorCategorias(eventos, idElementoHTML) {
+  const checkboxes = document.querySelectorAll('input[type=checkbox][name=opciones]');
+
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', () => {
+
+      const categoriasSeleccionadas = [];
+      checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+          categoriasSeleccionadas.push(checkbox.value);
+        }
+      });
+
+      let eventosFiltradosCheckbox;
+      if (categoriasSeleccionadas.length === 0) {
+        eventosFiltradosCheckbox = eventos;
+      } else {
+        eventosFiltradosCheckbox = eventos.filter((evento) => {
+          return categoriasSeleccionadas.includes(evento.category);
+        });
+      }
+
+      const carta1 = document.getElementById(idElementoHTML);
+      carta1.innerHTML = '';
+      for (let i = 0; i < eventosFiltradosCheckbox.length; i++) {
+        carta1.innerHTML += crearMasArticle(eventosFiltradosCheckbox[i]);
+      }
+    });
+  });
+}
+//crear cartas
+
+export function mostrarEventosPasados(eventos, idElementoHTML, eventoDatos) {
+  const carta = document.getElementById(idElementoHTML);
+  const eventosPasados = [];
+
+  for (const evento of eventos) {
+    if (evento.date < eventoDatos.currentDate) {
+      eventosPasados.push(evento);
+      console.log(evento);
+    }
+  }
+
+  let crearArticle = "";
+  for (let i = 0; i < eventosPasados.length; i++) {
+    crearArticle += crearMasArticle(eventosPasados[i]);
+  }
+
+  carta.innerHTML = crearArticle;
+}

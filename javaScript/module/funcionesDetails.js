@@ -18,3 +18,12 @@ export function pintarImagenEventos(eventoAmazing,contenedorImg) {
 
     contenedorImg.innerHTML = eventoImagenImpreso;
 }
+
+//todo 
+export function mostrarDetalleEvento(eventosAmazing, nombreEvento, detallesCarta, contenedorImg) {
+  const eventoEncontrado = eventosAmazing.find(eventoAmazing => eventoAmazing.name === nombreEvento);
+    
+  pintarDescripcionDeEventos(eventoEncontrado, detallesCarta);
+  pintarImagenEventos(eventoEncontrado, contenedorImg);
+}
+
